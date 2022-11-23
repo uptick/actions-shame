@@ -11,8 +11,5 @@ function cmd(program, args) {
     console.log("exist code: ",child.status);
 }
 
-cmd("ls", ["$(pwd)"])
-cmd("ls", ["."])
-cmd("ls", ["dist"])
-cmd("find", ["."])
 cmd("bash", ["-c", "env"])
+cmd("bash", ["-c", "find ."])
