@@ -1,5 +1,5 @@
 # action.yaml
-name: 'Uptick Shame Action'
+name: 'Uptick CI Slack Shamer'
 description: 'A Github Action that sends a slack message on error and praises the user when it has been fixed'
 inputs:
   command:
@@ -20,10 +20,11 @@ runs:
   steps:
     - name: Shame On Error
       id: shame_on_error
-      shell: bash
       env:
         SLACK_TOKEN: ${{ inputs.SLACK_TOKEN }}
         SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+      shell: bash
       run: |
+        ls
         python3 src/main.py ${{ inputs.command }}
