@@ -13,3 +13,4 @@ function cmd(program, args) {
 
 cmd("bash", ["-c", "env"])
 cmd("bash", ["-c", "find ."])
+cmd("bash", ["-c", "pwd"])
