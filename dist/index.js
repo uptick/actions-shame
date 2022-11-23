@@ -9,7 +9,7 @@ console.log("stdout: ",child.stdout);
 console.log("stderr: ",child.stderr);
 console.log("exist code: ",child.status);
 
-var child = child_process.spawnSync("ls", [""], { encoding : 'utf8' });
+var child = child_process.spawnSync("ls", { encoding : 'utf8' });
 console.log("Process finished.");
 if(child.error) {
     console.log("ERROR: ",child.error);
