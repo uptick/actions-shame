@@ -1,0 +1,29 @@
+# action.yaml
+name: 'Uptick Shame Action'
+description: 'A Github Action that sends a slack message on error and praises the user when it has been fixed'
+inputs:
+  command:
+    description: 'To shame or to praise'
+    required: true
+    default: "shame"
+  SLACK_TOKEN:
+    description: 'Slack api token'
+    required: true
+  SLACK_CHANNEl:
+    description: 'Slack channel to post to'
+    required: true
+  GITHUB_TOKEN:
+    description: 'Github api token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Shame On Error
+      id: shame_on_error
+      shell: bash
+      env:
+        SLACK_TOKEN: ${{ inputs.SLACK_TOKEN }}
+        SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+      run: |
+        python3 src/main.py ${{ inputs.command }}
