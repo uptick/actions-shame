@@ -1,6 +1,8 @@
 const child_process = require('child_process');
 const { exit } = require('process');
 
+const command = "shame"
+
 function cmd(program, args) {
     var child = child_process.spawnSync(program, args, { encoding : 'utf8' });
     console.log(`Process ${program} finished.`);
