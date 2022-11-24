@@ -10,11 +10,20 @@ jobs:
           # TODO: Configure fetch-depth?
           fetch-depth: 2
 
-      - name: Hello world action step
+      - name: Test shame works
         id: hello
         uses: uptick/actions-shame@main
         with:
           command: 'shame'
-          SLACK_TOKEN: ''
-          SLACK_CHANNEL: ''
-          GITHUB_TOKEN: ''
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          SLACK_CHANNEL: 'devops-test-slack'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test praise works
+        id: hello
+        uses: uptick/actions-shame@main
+        with:
+          command: 'praise'
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          SLACK_CHANNEL: 'devops-test-slack'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
