@@ -1,14 +1,13 @@
-# Shame Action
+# Github Slack Shaming Action
 
-This action can be used to notify a slack channel on a failed test.
+This github action notifies a slack channel on test failures (and subsequent fixes). The action
+will include relevant information as well as slack notifying the user responsible for the failed test.
 
-This action can also be used to notify a slack channel when a **CI JOB** passes.
-
+The command is split into 2 commands. A shame and a praise.
 On a `praise` command, the action will search your git history for the last completed JOB
 matching the current job. If the last job was a failure, this action will praise the author for fixing it.
 
-This Action is able to search users in your slack organisation and match the user with the most
-similar name and email to the git commit author.
+The github action is able to locate the slack user by searching your slack organisations api for users with the most similar name and email as the latest git commit.
 
 ![Example screenshot of slack message](screenshot.png)
 
