@@ -10,6 +10,8 @@ matching the current job. If the last job was a failure, this action will praise
 This Action is able to search users in your slack organisation and match the user with the most
 similar name and email to the git commit author.
 
+![Example screenshot of slack message](screenshot.png)
+
 ## Inputs
 
 ### `command`
