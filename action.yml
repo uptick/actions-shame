@@ -1,5 +1,5 @@
 # action.yaml
-name: 'Uptick Shame Action'
+name: 'Uptick CI Slack Shamer'
 description: 'A Github Action that sends a slack message on error and praises the user when it has been fixed'
 inputs:
   command:
@@ -18,12 +18,31 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Shame On Error
-      id: shame_on_error
-      shell: bash
-      env:
-        SLACK_TOKEN: ${{ inputs.SLACK_TOKEN }}
-        SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-      run: |
-        python3 src/main.py ${{ inputs.command }}
+
+  - name: Set environment variables
+    shell: bash
+    run: |
+      if [[ ${{github.event_name}} == 'push' ]];
+      then
+        echo "GITHUB_EVENT=push" >> $GITHUB_ENV
+        echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} )" >> $GITHUB_ENV
+        echo "GIT_SHORT_HASH=${{github.sha}}" | cut -c -22  >> $GITHUB_ENV
+      else
+        echo "GITHUB_EVENT=pull_request" >> $GITHUB_ENV
+        echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} )" >> $GITHUB_ENV
+        export GIT_HEAD_SHA=${{github.event.pull_request.head.sha}}
+        export GIT_SHORT_HASH=$(echo $GIT_HEAD_SHA | cut -c -7)
+        echo "GIT_SHORT_HASH=$GIT_SHORT_HASH" >> $GITHUB_ENV
+      fi;
+      echo "GITHUB_REPOSITORY=${{github.repository}}" | sed 's/\//-/g' >> $GITHUB_ENV
+      cat $GITHUB_ENV
+
+  - name: Slack Shame Or Praise
+    id: slack_shame_or_praise
+    env:
+      SLACK_TOKEN: ${{ inputs.SLACK_TOKEN }}
+      SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
+      GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+    run: |
+      python3 ${{github.action_path}}/src/main.py ${{inputs.command}}
+    shell: bash

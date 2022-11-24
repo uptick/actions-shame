@@ -1,0 +1,20 @@
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # TODO: Configure fetch-depth?
+          fetch-depth: 2
+
+      - name: Hello world action step
+        id: hello
+        uses: uptick/actions-shame@main
+        with:
+          command: 'shame'
+          SLACK_TOKEN: ''
+          SLACK_CHANNEL: ''
+          GITHUB_TOKEN: ''
