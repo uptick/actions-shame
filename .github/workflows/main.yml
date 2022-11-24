@@ -1,3 +1,6 @@
+permissions:
+  actions: read
+
 on: [push]
 
 jobs:
@@ -11,7 +14,7 @@ jobs:
           fetch-depth: 2
 
       - name: Test shame works
-        id: hello
+        id: shame
         uses: uptick/actions-shame@main
         with:
           command: 'shame'
@@ -20,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test praise works
-        id: hello
+        id: praise
         uses: uptick/actions-shame@main
         with:
           command: 'praise'
