@@ -34,7 +34,7 @@ runs:
         export GIT_SHORT_HASH=$(echo $GIT_HEAD_SHA | cut -c -7)
         echo "GIT_SHORT_HASH=$GIT_SHORT_HASH" >> $GITHUB_ENV
       fi;
-      echo "GITHUB_REPOSITORY=${{github.repository}}" | sed 's/\//-/g' >> $GITHUB_ENV
+      echo "GITHUB_REPOSITORY=${{github.repository}}" >> $GITHUB_ENV
       cat $GITHUB_ENV
 
   - name: Slack Shame Or Praise
